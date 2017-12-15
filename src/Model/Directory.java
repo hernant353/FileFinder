@@ -52,8 +52,8 @@ public class Directory {
      * 
      * @return ArrayList<UserFile>
      */
-    private ArrayList<UserFile> extractFiles() {
-        File[] directoryFiles = this.directoryFile.listFiles();
+    ArrayList<UserFile> extractFiles(){
+    	File[] directoryFiles = this.directoryFile.listFiles();
         ArrayList<UserFile> resultFiles = new ArrayList<>();
         if (directoryFiles != null){
             for (File f : directoryFiles) {
