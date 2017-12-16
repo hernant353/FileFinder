@@ -1,0 +1,4 @@
+1) Let the user choose which directory to search from.
+2) Let the user set the dates to find old files from.
+3) Make a GUI (Andres)
+4) extra stuff?

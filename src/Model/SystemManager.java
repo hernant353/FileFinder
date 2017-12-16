@@ -1,7 +1,11 @@
 package Model;
 
+import javafx.stage.DirectoryChooser;
+
+import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class SystemManager {
 
@@ -28,6 +32,19 @@ public class SystemManager {
     public void addDirectory(Directory directory) {
         if (!directories.contains(directory)) {
             directories.add(directory);
+        }
+    }
+
+    /**
+     * Adds a new Directory object to the current list of directories by creating
+     * a new directory object with the given path.
+     *
+     * @param directoryPath: the path of the directory
+     */
+    public void addDirectory(String directoryPath){
+        Directory newDirectory = new Directory(directoryPath);
+        if (!directories.contains(newDirectory)){
+            directories.add(newDirectory);
         }
     }
     
@@ -73,17 +90,21 @@ public class SystemManager {
         return null;
     }
 
-    public ArrayList<UserFile> getOldUserFiles(long timeStamp){
+    public ArrayList<UserFile> getOldUserFiles(){
     	ArrayList<UserFile> allUserFiles = new ArrayList<>();
+    	//Date date = new Date(timeStamp);
     	for (Directory dir: directories){
-    		ArrayList<UserFile> currentDir = dir.extractFiles();
-    		for (UserFile file: currentDir){
-    			if (file.getTimeStamp() < timeStamp){
-    				allUserFiles.add(file);
-    			}
-    		}
+            allUserFiles.addAll(dir.extractFiles());
     	}
     	return allUserFiles;
     }
+
+//    public void findDirectory(){
+//        JFileChooser directoryChooser = new JFileChooser();
+//        File selectedFile = directoryChooser.getSelectedFile();
+//        if (selectedFile != null){
+//            directories.add(new Directory(selectedFile.getAbsolutePath()));
+//        }
+//    }
 
 }

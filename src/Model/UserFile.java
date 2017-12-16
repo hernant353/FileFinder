@@ -3,6 +3,12 @@ package Model;
 import Model.Directory;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Date;
 
 public class UserFile{
 
@@ -36,8 +42,19 @@ public class UserFile{
      *
      * @return String
      */
-    String getFileName(){
+    public String getFileName(){
         return fileName;
+    }
+
+    /**
+     * Returns the last modification date of this file.
+     *
+     * @return Date
+     */
+    public String getLastAccessedDate() throws IOException {
+        Path thisUserFile = Paths.get(this.file.getAbsolutePath());
+        BasicFileAttributes fileAttributes = Files.readAttributes(thisUserFile, BasicFileAttributes.class);
+        return fileAttributes.lastAccessTime().toString();
     }
 
 }

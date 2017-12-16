@@ -13,9 +13,9 @@ public class Directory {
     // The directory File of this Model.Directory object.
     private File directoryFile;
 
-    public Directory(String var1) {
-        this.directoryPath = var1;
-        this.directoryFile = new File(var1);
+    public Directory(String path) {
+        this.directoryPath = path;
+        this.directoryFile = new File(path);
     }
 
     /**
@@ -45,6 +45,7 @@ public class Directory {
     File getDirectoryFile() {
         return this.directoryFile;
     }
+
 
     /**
      * Extracts all the files contained within this directory and returns
