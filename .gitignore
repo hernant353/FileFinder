@@ -1,3 +1,4 @@
 .idea/
 FileFinder.iml/
 *.iml
+out/production/
