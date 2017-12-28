@@ -16,6 +16,15 @@ import javax.swing.JTable;
 import Model.UserFile;
 import javax.swing.SwingConstants;
 
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
+import java.util.Date;
+import java.util.Properties;
+import java.util.Calendar;
+
+
 public class frame1 {
 
 	private JFrame frame;
@@ -76,30 +85,50 @@ public class frame1 {
 		btnAbout.setBounds(361, 0, 116, 29);
 		frame.getContentPane().add(btnAbout);
 		
-		//dropDown boxes, set type and driver
+		//dropDown boxes, set type and driver + DatePicker
+		
+		//Labels
 		JLabel lblType_1 = new JLabel("Type");
-		lblType_1.setBounds(60, 69, 100, 20);
+		lblType_1.setBounds(60, 30, 100, 20);
 		frame.getContentPane().add(lblType_1);
 		
 		JLabel lblDir = new JLabel("Directories");
-		lblDir.setBounds(60, 105, 100, 20);
+		lblDir.setBounds(60, 66, 100, 20);
 		frame.getContentPane().add(lblDir);
+		
+		JLabel lblDate = new JLabel("Set date");
+		lblDate.setBounds(60, 102, 100, 20);
+		frame.getContentPane().add(lblDate);
 		
 		//Types 
 		String[] typeStrings = {"All", "Books", "Images", "Software", "Others"};
 		JComboBox cbType = new JComboBox(typeStrings);
 		cbType.setSelectedIndex(0);
 		//cbType.addActionListener(this);
-		cbType.setBounds(160, 66, 115, 26);
+		cbType.setBounds(160, 30, 115, 26);
 		frame.getContentPane().add(cbType);
 		
 		//Directory
 		String[] directories = {"All", "C", "D", "Specify"};
 		JComboBox cbDir = new JComboBox(directories);
-		cbDir.setBounds(160, 102, 115, 26);
+		cbDir.setBounds(160, 66, 115, 26);
 		cbDir.setSelectedIndex(0);
 		frame.getContentPane().add(cbDir);
 		
+		//Date picker
+		UtilDateModel model = new UtilDateModel();
+		//Set and show initial date
+		model.setDate(2015, 8, 24);
+		model.setSelected(true);
+		//Need this...
+		Properties p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, null);
+		datePicker.setBounds(160, 102, 115, 26);
+		frame.getContentPane().add(datePicker);
 		
 		//Table showing files found
 		String[] columnNames = {"Name", "Location", "Type", "Size", "Last Date Modified"};
@@ -126,6 +155,7 @@ public class frame1 {
 		JButton btnRemoveSelected = new JButton("Remove selected files");
 		btnRemoveSelected.setBounds(380, 311, 100, 65);
 		frame.getContentPane().add(btnRemoveSelected);
+		
 		
 	}
 }
