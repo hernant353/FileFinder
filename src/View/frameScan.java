@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JSplitPane;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
@@ -21,14 +22,25 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+
+import java.util.Scanner;
 
 
-public class frame1 {
+
+
+public class frameScan {
 
 	private JFrame frame;
 	private JTable tableFiles;
+	List<String> selectedType = new ArrayList<String>();
 
 	/**
 	 * Launch the application.
@@ -37,7 +49,7 @@ public class frame1 {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frame1 window = new frame1();
+					frameScan window = new frameScan();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,7 +61,7 @@ public class frame1 {
 	/**
 	 * Create the application.
 	 */
-	public frame1() {
+	public frameScan() {
 		initialize();
 	}
 
@@ -65,19 +77,67 @@ public class frame1 {
 		frame.getContentPane().setLayout(null);
 		
 		//main Buttons
+		//Scan
 		JButton btnScan = new JButton("Scan");
+		//do nothing
+		/*
+		btnScan.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+				frameScan scan = new frameScan();
+				JFrame showScan = scan.getFrame();
+				showScan.setVisible(true);
+				frame.setVisible(false);				
+				
+			}
+		});
+		*/
+		
 		btnScan.setBounds(0, 0, 115, 29);
 		frame.getContentPane().add(btnScan);
 		
+		//Options
 		JButton btnOptn = new JButton("Options");
+		btnOptn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				frameOptn options = new frameOptn();
+				JFrame showOptions = options.getFrame();
+				showOptions.setVisible(true);
+				frame.setVisible(false);
+				
+			}
+		});
 		btnOptn.setBounds(121, 0, 115, 29);
 		frame.getContentPane().add(btnOptn);
 		
+		//History
 		JButton btnHist = new JButton("History");
+		btnHist.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				frameHist history = new frameHist();
+				JFrame showHist = history.getFrame();
+				showHist.setVisible(true);
+				frame.setVisible(false);
+			}
+			
+		});
 		btnHist.setBounds(241, 0, 115, 29);
 		frame.getContentPane().add(btnHist);
 		
+		//About
 		JButton btnAbout = new JButton("About");
+		btnAbout.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				frameAbout about = new frameAbout();
+				JFrame showAbout = about.getFrame();
+				showAbout.setVisible(true);
+				frame.setVisible(false);
+			}
+		});
 		btnAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
@@ -102,7 +162,26 @@ public class frame1 {
 		
 		//Types 
 		String[] typeStrings = {"All", "Books", "Images", "Software", "Others"};
+		
 		JComboBox cbType = new JComboBox(typeStrings);
+		cbType.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if (cbType.getSelectedIndex()==4) {
+					selectedType.add( JOptionPane.showInputDialog("Please type file extention to look for: "));
+					
+					System.out.println(selectedType.get(0));
+					//System.out.println(selectedType.get(1));
+					
+				}
+				else {
+				int typeIndex = cbType.getSelectedIndex();
+				selectedType.add ( typeStrings[typeIndex]);
+				//Debug test
+				System.out.println(selectedType.get(0));
+				}
+			}
+		});
+		
 		cbType.setSelectedIndex(0);
 		//cbType.addActionListener(this);
 		cbType.setBounds(160, 30, 115, 26);
@@ -156,6 +235,10 @@ public class frame1 {
 		btnRemoveSelected.setBounds(380, 311, 100, 65);
 		frame.getContentPane().add(btnRemoveSelected);
 		
-		
 	}
+	//Getter
+			public JFrame getFrame() {
+				return this.frame;
+			}
+			
 }
