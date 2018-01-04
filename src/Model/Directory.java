@@ -23,7 +23,7 @@ public class Directory {
      * 
      * @return String
      */
-    private String getDirectoryPath() {
+    public String getDirectoryPath() {
         return this.directoryPath;
     }
 
@@ -33,7 +33,7 @@ public class Directory {
      * 
      * @return ArrayList<UserFile>
      */
-    ArrayList<UserFile> getFileList() {
+    public ArrayList<UserFile> getFileList() {
         return this.userFileList;
     }
 
@@ -59,7 +59,19 @@ public class Directory {
         if (directoryFiles != null){
             for (File f : directoryFiles) {
                 if (f.isFile()) {
-                    if(SystemManager.searchFileByName(f.getName()) == null) {
+                    if (f.getName().endsWith(".lnk")||
+                            f.getName().endsWith(".h") ||
+                            f.getName().endsWith(".xml") ||
+                            f.getName().endsWith(".file") ||
+                            f.getName().endsWith(".dll")){
+                        /*
+                        By default, ignore:
+                        - C related files (.dll, .h, more to be added)
+                        - Shortcut files
+                        - More to be added.
+                        */
+                    }
+                    else if(SystemManager.searchFileByName(f.getName()) == null) {
                         UserFile file = new UserFile(f, this);
                         resultFiles.add(file);
                     }
@@ -68,8 +80,18 @@ public class Directory {
                     }
                 }
                 else if(f.isDirectory()){
-                    Directory newDirectory = new Directory(f.getAbsolutePath());
-                    resultFiles.addAll(newDirectory.extractFiles());
+                    if(f.getName().startsWith(".") ||
+                            f.isHidden() ||
+                            f.getName().matches("Windows")){
+                        /*
+                        By default, hidden files and files that start with the character '.' should be ignored.
+                        This is because they are usually vital and important.
+                        */
+                    }
+                    else {
+                        Directory newDirectory = new Directory(f.getAbsolutePath());
+                        resultFiles.addAll(newDirectory.extractFiles());
+                    }
                 }
             }
         }

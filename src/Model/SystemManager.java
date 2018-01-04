@@ -94,17 +94,9 @@ public class SystemManager {
     	ArrayList<UserFile> allUserFiles = new ArrayList<>();
     	//Date date = new Date(timeStamp);
     	for (Directory dir: directories){
-            allUserFiles.addAll(dir.extractFiles());
+    	    allUserFiles.addAll(dir.extractFiles());
     	}
     	return allUserFiles;
     }
-
-//    public void findDirectory(){
-//        JFileChooser directoryChooser = new JFileChooser();
-//        File selectedFile = directoryChooser.getSelectedFile();
-//        if (selectedFile != null){
-//            directories.add(new Directory(selectedFile.getAbsolutePath()));
-//        }
-//    }
 
 }
